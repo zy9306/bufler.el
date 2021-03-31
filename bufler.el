@@ -432,15 +432,9 @@ NAME, okay, `checkdoc'?"
 
 (bufler-define-buffer-command switch "Switch to buffer."
   (lambda (buffer)
-    (let ((bufler-window (selected-window)))
-      ;; (ignore-errors
-      ;;   ;; Ignoring the error seems like the easiest way to handle
-      ;;   ;; this.  There are a surprising number of nuances in getting
-      ;;   ;; this to behave exactly as desired in all cases.
-      ;;   (delete-window bufler-window))
-      (pop-to-buffer buffer '((display-buffer-use-some-window
-                               display-buffer-reuse-window
-                               display-buffer-same-window)))))
+    ;; inhibit-same-window 如果为 t 则表示不会使用当前选中的窗口。
+    (display-buffer buffer '((display-buffer-same-window)
+                             (inhibit-same-window . nil))))
   :refresh-p nil)
 
 (bufler-define-buffer-command peek "Peek at buffer in another window."
